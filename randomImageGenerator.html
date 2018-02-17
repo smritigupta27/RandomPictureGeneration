@@ -46,9 +46,11 @@
                 ctx.fillRect( x, y, 1, 1 );
                 ctx.fillStyle = "rgba("+r+","+g+","+b+", 1)";
                 ctx.fill();
+                pixel+=1;
                 y = y+1;
             }
             x = x+1;
+            y=0;
         }
 
 
