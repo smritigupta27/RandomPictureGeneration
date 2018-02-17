@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="myCanvas" width="300" height="150" style="border:1px solid #d3d3d3;">
+    Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+    loadDoc();
+    function loadDoc() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var strValue = this.responseText;
+                console.log(typeof strValue.split("\n"))
+
+                var res = strValue.trim().split("\n")
+                myCanvasData(res);
+            }
+        };
+        xhttp.open("GET", "https://www.random.org/integers/?num=1000&min=0&max=255&col=1&base=10&format=plain&rnd=new", true);
+        xhttp.send();
+    }
+    function myCanvasData(rgbdata){
+
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        var width=128;
+        var height=128;
+        var imgData = ctx.createImageData(width, height);
+        var j;
+        var r,g,b;
+        var index = 0;
+        var pixel = 0;
+        var x =0;
+        var y = 0;
+        while(x<width){
+            while(y<height){
+                if(pixel+2>rgbdata.length){
+                    pixel = 0;
+                }
+                r = rgbdata[pixel];
+                g = rgbdata[pixel+1];
+                b = rgbdata[pixel+2];
+                ctx.beginPath();
+                ctx.fillRect( x, y, 1, 1 );
+                ctx.fillStyle = "rgba("+r+","+g+","+b+", 1)";
+                ctx.fill();
+                y = y+1;
+            }
+            x = x+1;
+        }
+
+
+    }
+
+</script>
+
+
+
+</body>
+</html>
